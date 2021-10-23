@@ -6,8 +6,12 @@ export class AuthenticateUserController {
     const { code } = request.body;
 
     const service = new AuthenticateUserService();
-    const result = await service.execute(code);
 
-    return response.json(result);
+    try {
+      const result = await service.execute(code);
+      return response.json(result);
+    } catch (error: any) {
+      return response.json({ error: error.message });
+    }
   }
 }
